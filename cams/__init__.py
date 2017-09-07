@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright 2017 Krzysztof Stopa (stopa.krzysztof.k@gmail.com)
 
@@ -18,14 +18,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with CAMS tools.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
-import cams
+__version__ = '0.2'
+__author__ = 'Krzysztof Stopa'
+__licence__ = 'LGPLv3'
 
-setup(name='CAMS tools',
-      version=cams.__version__,
-      description='Copernicus Atmosphere Monitoring Service (CAMS) downloading and processing tools',
-      author=cams.__author__,
-      author_email='stopa.krzysztof.k@gmail.com',
-      url='https://github.com/kstopa/cams-tools',
-      packages=['cams'], requires=['requests']
-      )
+
+class ExitStatus:
+    """Exit status code constants."""
+    OK = 0
+    ERROR = 1
+
+    # 128+2 SIGINT <http://www.tldp.org/LDP/abs/html/exitcodes.html>
+    ERROR_CTRL_C = 130
+

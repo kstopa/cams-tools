@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # Copyright 2017 Krzysztof Stopa (stopa.krzysztof.k@gmail.com)
 
 # This file is part of Copernicus Atmosphere Monitoring Service (CAMS) downloading and
@@ -18,14 +16,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with CAMS tools.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
-import cams
+from enum import Enum
 
-setup(name='CAMS tools',
-      version=cams.__version__,
-      description='Copernicus Atmosphere Monitoring Service (CAMS) downloading and processing tools',
-      author=cams.__author__,
-      author_email='stopa.krzysztof.k@gmail.com',
-      url='https://github.com/kstopa/cams-tools',
-      packages=['cams'], requires=['requests']
-      )
+class Param(Enum):
+
+    @classmethod
+    def has_value(cls, value):
+        return (any(value == item.value for item in cls))
+
+    @classmethod
+    def from_filename(cls, filename):
+        for item in cls:
+            if item.value in filename:
+                return item
+        return None
