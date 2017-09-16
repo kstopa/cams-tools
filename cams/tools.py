@@ -21,6 +21,7 @@ from subprocess import call
 
 from cams.core import Param
 
+
 class Wgrib2Format(Param):
     """
         -netcdf: write data in netcdf format
@@ -82,14 +83,23 @@ class Wgrib2Format(Param):
 class Converter:
 
     @staticmethod
-    def convert(grib2_in, path_out, time, format_out=Wgrib2Format.NETCDF):
+    def convert(grib2_path, path_out, time, format_out=Wgrib2Format.NETCDF):
+        """
+
+        :param grib2_in: Grib2 file to be converted
+        :param path_out: Output path where each avaiable time (individual grid) will be save.
+        :param time: Reference time of the grib2 forecast. Can be get using Time.from_file() method.
+        :type time: Time
+        :param format_out: One of the ava
+        :return:
+        """
         files = []
-        print("Converting {0} to {1}".format(path.basename(grib2_in), format_out.value))
+        print("Converting {0} to {1}".format(grib2_path, format_out.value))
         for hour in range(1, time.get_hours_range() + 1):
             hour_num = hour+time.get_base_time()
-            out_filename = grib2_in.replace(time.value, Converter._format_hour(hour_num)).replace('.grib2', '.{0}'.format(format_out.get_file_extension()))
+            out_filename = path.basename(grib2_path).replace(time.value, Converter._format_hour(hour_num)).replace('.grib2', '.{0}'.format(format_out.get_file_extension()))
             out_filepath = path.join(path_out, out_filename)
-            cmd = ['wgrib2', grib2_in, '-d', str(hour), format_out.to_cmd(), out_filepath]
+            cmd = ['wgrib2', grib2_path, '-d', str(hour), format_out.to_cmd(), out_filepath]
             # TODO Add error control. Check if wgrib2 worked
             call(cmd)
             files.append(out_filepath)
@@ -97,7 +107,7 @@ class Converter:
 
     @staticmethod
     def _format_hour(hour):
-        if -10 < hour < 0 :
+        if -10 < hour < 0:
             return '{0}H'.format(hour).replace('-', '-0')
         else:
             return '{:02d}H'.format(hour)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The main entry point. Invoke as 'cams' or `python cams'.
+"""The main entry point. Invoke as 'cams' or `python3 cams'.
 """
 import sys
 

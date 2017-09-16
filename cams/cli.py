@@ -20,7 +20,9 @@
 
 import argparse
 import datetime
+from os import path
 
+import cams
 from cams.regional import PackageSpecies, Model, PackageLevel, Time, PackageType, Format, Downloader
 from cams.tools import Converter, Wgrib2Format
 
@@ -63,7 +65,7 @@ def main():
     try:
         reference_date = datetime.datetime.strptime(args.reference, "%Y-%m-%d")
     except ValueError:
-        param_err += 'Reference date, '
+        param_err += 'Reference date wrong format (use YYYY-mm-dd), '
     if args.convert and not Wgrib2Format.has_value(args.convert):
         param_err += "wgrib2 conversion format, "
     # Download if no errors
@@ -89,11 +91,11 @@ def main():
             for df in down_files:
                 time = Time.from_filename(path.basename(df))
                 Converter.convert(df, args.out, time, to_format)
-        return 0
+        return cams.ExitStatus.OK
     else:
         print("Error: invalid value for {0}".format(param_err))
         parser.print_help()
-        return -1
+        return cams.ExitStatus.ERROR
 
 if __name__ == '__main__':
     main()

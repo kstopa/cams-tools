@@ -15,14 +15,18 @@ This utility includes tools for:
  - CLI or API usage.
  - Download of individual packages.
  - Bulk download.
- - GRIB2 to NetCDF conversion (not implemented yet).
+ - Grib2 conversion conversion to [wgrib2 supported formats](#grib2-conversion-with-wgrib2).
 
 ## Installation
 
 If you just want to download the data the only requirement is to have Python 3 and
 requests library installed. So just run:
 
-    pip3 install requests
+    python3 setup.py install
+
+Note that python 2 is not tested but you can try (last time it works):
+
+    python setup.py install
 
 ### GRIB2 conversion option installation (Optional)
 
@@ -53,18 +57,25 @@ To be improved. Just type:
 
 #### CLI usage
 
-    python3 cams.py -h
+CAMS tools can be used from command line. To see all the options just type:
+
+    cams -h
+
+
 
 #### API usage
 
 
-### Converting with WGRIB2
+### Grib2 conversion with wgrib2
 
-If you have installed wgrib2 tool in your system the tool can uses it
-to convert CAMS GRIB2 data to other formats by using wgib2 tool.
+If you have installed wgrib2 tool in your system, the CAMS tools can
+uses it to convert CAMS GRIB2 files to other formats by using wgib2 tool.
 Currently wgrib2 supports:
 
-- netcdf: write data in netcdf v3 format (or v4 if wgrib2 is compiled with this option. Note that in opposite as default NETCDF support this format **conserves geometry information**.
+- netcdf: write data in netcdf v3 format (or v4 if wgrib2 is compiled
+with this option. Note that in opposite as default supported NetCDF
+format, files converted from Grib2 to NetCDF format using CAMS tools
+**conserves geometry information**.
 - mysql: export data to a mysql database
 - mysql_speed: export data to a mysql database
 - spread: write data for Excel spreadsheets

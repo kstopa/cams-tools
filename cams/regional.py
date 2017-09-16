@@ -147,6 +147,8 @@ class Downloader:
         :return: Path to the downloaded file or None if error
         """
         # TODO check date and package compatibility
+        if time == Time.ANALYSIS_24H1H:
+            type = PackageType.ANALYSIS
         # Referece date is formatted as YYYY-MM-DDT00:00:00Z
         params = 'token=' + Downloader._token +\
                  '&grid=' + Downloader._grid +\
@@ -187,11 +189,13 @@ class Downloader:
                 for sp in PackageSpecies:
                     if sp != PackageSpecies.ALL_SPECIES:
                         df = Downloader.download(out_path, reference_time, model, package_type, sp, level, time, data_format)
-                        down_files.append(df)
+                        if df is not None:
+                            down_files.append(df)
             elif time != Time.ALLTIMES:
                 # Download just single specie
                 df = Downloader.download(out_path, reference_time, model, package_type, species, level, time, data_format)
-                down_files.append(df)
+                if df is not None:
+                    down_files.append(df)
         return down_files
 
 
