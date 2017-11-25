@@ -22,7 +22,6 @@ import datetime
 import requests
 import sys
 
-from cams.tools import Converter
 from cams.core import Param
 
 class Model(Param):

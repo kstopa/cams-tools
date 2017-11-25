@@ -59,12 +59,21 @@ To be improved. Just type:
 
 CAMS tools can be used from command line. To see all the options just type:
 
-    cams -h
+    python cams -h
 
+You can select which species and which forecast or analysis data you want to download. E.g. to download ENSEMBLE today's
+forecast from 0 to 24 hours and CO species you can use:
 
+    python cams --species CO --time 0H24H
+
+Historic data is available since 1 October 2015, you can set the base date by using the __reference__ parameter. To get data e.g from
+22 January 2016 just type:
+
+    python cams --reference 2016-01-22 --species PM10 --time 0H24H
+
+By default data is download at current folder. You can setup the location by using __out__ parameter.
 
 #### API usage
-
 
 ### Grib2 conversion with wgrib2
 

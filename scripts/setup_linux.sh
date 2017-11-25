@@ -22,6 +22,8 @@
 
 # Install WGRIB2
 
+sudo apt-get install -y build-essential gfortran libz-dev 
+
 export FC=gfortran
 export CC=gcc
 ## Download and compile
